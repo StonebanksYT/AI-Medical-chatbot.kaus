@@ -1,10 +1,43 @@
-import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'chatmessage.dart';
 import 'threedots.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+Future<String> makeRequest(String input) async {
+  var apiKey = "448f21b7-5674-475b-a4bf-1f487fc1234d";
+  var url = "https://api.oneai.com/api/v0/pipeline";
+
+  var headers = {
+    "api-key": apiKey,
+    "content-type": "application/json"
+  };
+
+  var payload = {
+    "input": input,
+    "input_type": "article",
+    "output_type": "json",
+    "multilingual": {"enabled": true},
+    "steps": [{"skill": "gpt"}]
+  };
+
+  final response = await http.post(Uri.parse(url),
+      headers: headers, body: json.encode(payload));
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    print(data);
+    print(data['output'][0]['contents'][0]['utterance']);
+    String output=data['output'][0]['contents'][0]['utterance'];
+    return output;
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+    String errorCode='Request failed with status: ${response.statusCode}.';
+    return errorCode;
+  }
+}
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -16,26 +49,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final List<ChatMessage> _messages = [];
-  late OpenAI? chatGPT;
-  bool _isImageSearch = false;
-
   bool _isTyping = false;
-
-  @override
-  void initState() {
-    chatGPT = OpenAI.instance.build(
-        token: dotenv.env['apikey'],
-        baseOption: HttpSetup(receiveTimeout: 60000));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    chatGPT?.close();
-    chatGPT?.genImgClose();
-    super.dispose();
-  }
-
   // Link for api - https://beta.openai.com/account/api-keys
 
   void _sendMessage() async {
@@ -50,30 +64,15 @@ class _ChatScreenState extends State<ChatScreen> {
       _messages.insert(0, message);
       _isTyping = true;
     });
-
     _controller.clear();
-
-    if (_isImageSearch) {
-      final request = GenerateImage(message.text, 1, size: "256x256");
-
-      final response = await chatGPT!.generateImage(request);
-      Vx.log(response!.data!.last!.url!);
-      insertNewData(response.data!.last!.url!, isImage: true);
-    } else {
-      final request =
-          CompleteText(prompt: message.text, model: kTranslateModelV3);
-
-      final response = await chatGPT!.onCompleteText(request: request);
-      Vx.log(response!.choices[0].text);
-      insertNewData(response.choices[0].text, isImage: false);
-    }
+      String response = await makeRequest(message.text);
+      insertNewData(response);
   }
 
-  void insertNewData(String response, {bool isImage = false}) {
+  void insertNewData(String response) {
     ChatMessage botMessage = ChatMessage(
       text: response,
       sender: "bot",
-      isImage: isImage,
     );
 
     setState(() {
@@ -98,16 +97,9 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               icon: const Icon(Icons.send),
               onPressed: () {
-                _isImageSearch = false;
                 _sendMessage();
               },
             ),
-            // TextButton(
-            //     onPressed: () {
-            //       _isImageSearch = true;
-            //       _sendMessage();
-            //     },
-            //     child: const Text("Generate Image"))
           ],
         ),
       ],
@@ -120,7 +112,7 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           title: const Text("AI Medical Assistant"),
           centerTitle: true,
-          leading: Icon(Icons.chat_bubble_outline_outlined),
+          leading: const Icon(Icons.chat_bubble_outline_outlined),
           backgroundColor: Colors.blueAccent,
           elevation: 15,
         ),

@@ -1,6 +1,5 @@
+import 'package:chat_gpt_02/screens/homepage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'chat_screen.dart';
 
 // Future main() async {
@@ -11,14 +10,12 @@ import 'chat_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: "assets/.env");
-    // dotenv.get('apikey', fallback: "API_KEY NOT FOUND");
+  // dotenv.get('apikey', fallback: "API_KEY NOT FOUND");
 
   // final apiKey = dotenv.env['apikey'];
   // print(apiKey);
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -33,7 +30,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         useMaterial3: true,
       ),
-      home: const ChatScreen(),
+      home: homePage(),
     );
   }
 }
