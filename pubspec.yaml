@@ -40,6 +40,7 @@ dependencies:
   flutter_svg: ^2.0.5
   http: ^0.13.6
   velocity_x: ^3.6.0
+  image_picker:
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
