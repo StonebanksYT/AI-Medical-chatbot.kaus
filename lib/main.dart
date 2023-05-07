@@ -1,4 +1,5 @@
 import 'package:chat_gpt_02/screens/homepage.dart';
+import 'package:chat_gpt_02/screens/signinpage.dart';
 import 'package:flutter/material.dart';
 
 Future main() async {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         useMaterial3: true,
       ),
-      home: homePage(),
+      home: SignInPage(),
     );
   }
 }

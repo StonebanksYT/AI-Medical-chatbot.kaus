@@ -19,20 +19,20 @@ class _SignUpPageState extends State<SignUpPage> {
   late int height;
   late double weight;
   late String bloodgrp;
-  late File _image;
+  // late File _image;
 
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: source,
-      maxWidth: 800,
-      maxHeight: 800,
-      imageQuality: 80,
-    );
-    if (pickedFile == Null) return;
+  // Future<void> _pickImage(ImageSource source) async {
+  //   final pickedFile = await ImagePicker().pickImage(
+  //     source: source,
+  //     maxWidth: 800,
+  //     maxHeight: 800,
+  //     imageQuality: 80,
+  //   );
+  //   if (pickedFile == Null) return;
 
-    final imageTemporary = File(pickedFile!.path);
-    setState(() => _image = imageTemporary);
-  }
+  //   final imageTemporary = File(pickedFile!.path);
+  //   setState(() => _image = imageTemporary);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -52,37 +52,37 @@ class _SignUpPageState extends State<SignUpPage> {
               });
             },
           ),
-          ElevatedButton(
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return SafeArea(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ListTile(
-                              leading: Icon(Icons.photo_library),
-                              title: Text("Photo Library"),
-                              onTap: () {
-                                _pickImage(ImageSource.gallery);
-                                Navigator.of(context).pop();
-                              }),
-                          ListTile(
-                            leading: Icon(Icons.photo_camera),
-                            title: Text("Camera"),
-                            onTap: () {
-                              _pickImage(ImageSource.camera);
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  });
-            },
-            child: Text('Select Profile Picture'),
-          ),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     showModalBottomSheet(
+          //         context: context,
+          //         builder: (BuildContext context) {
+          //           return SafeArea(
+          //             child: Column(
+          //               mainAxisSize: MainAxisSize.min,
+          //               children: <Widget>[
+          //                 ListTile(
+          //                     leading: Icon(Icons.photo_library),
+          //                     title: Text("Photo Library"),
+          //                     onTap: () {
+          //                       _pickImage(ImageSource.gallery);
+          //                       Navigator.of(context).pop();
+          //                     }),
+          //                 ListTile(
+          //                   leading: Icon(Icons.photo_camera),
+          //                   title: Text("Camera"),
+          //                   onTap: () {
+          //                     _pickImage(ImageSource.camera);
+          //                     Navigator.of(context).pop();
+          //                   },
+          //                 ),
+          //               ],
+          //             ),
+          //           );
+          //         });
+          //   },
+          //   child: Text('Select Profile Picture'),
+          // ),
           TextFormField(
             decoration: InputDecoration(labelText: "Email"),
             onChanged: (value) {

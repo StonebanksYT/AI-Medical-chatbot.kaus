@@ -290,7 +290,8 @@ class _homePageState extends State<homePage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 120),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.3),
                           child: BmiProgressIndicator(user: currentUser),
                         )
                       ],
