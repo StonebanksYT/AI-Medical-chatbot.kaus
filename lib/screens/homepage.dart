@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:chat_gpt_02/Controller/usercontroller.dart';
 import 'package:chat_gpt_02/Model/user.dart';
 import 'package:chat_gpt_02/chat_screen.dart';
@@ -31,7 +33,6 @@ class _homePageState extends State<homePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       drawer: Drawer(
         shape: RoundedRectangleBorder(
@@ -253,36 +254,49 @@ class _homePageState extends State<homePage> {
                                   fontWeight: FontWeight.bold,
                                 )))))
                 : Container(
-                    height: MediaQuery.of(context).size.height / 5,
+                    height: MediaQuery.of(context).size.height / 6,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: Colors.orange.shade100,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'BMI',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'BMI',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                (currentUser.weight! /
+                                        (currentUser.height! /
+                                            100 *
+                                            currentUser.height! /
+                                            100))
+                                    .toStringAsFixed(2),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 8),
-                          Text(
-                            '${(currentUser.weight! / (currentUser.height! / 100 * currentUser.height! / 100)).toStringAsFixed(2)}',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 120),
+                          child: BmiProgressIndicator(user: currentUser),
+                        )
+                      ],
                     ),
                   ),
             Expanded(
@@ -322,6 +336,69 @@ class _homePageState extends State<homePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class BmiProgressIndicator extends StatelessWidget {
+  final User user;
+  const BmiProgressIndicator({required this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    // Calculate BMI category based on user's BMI
+    String bmiCategory = "";
+    double bmi = user.weight! / pow(user.height! / 100, 2);
+    if (bmi < 18.5) {
+      bmiCategory = "Underweight";
+    } else if (bmi < 25) {
+      bmiCategory = "Normal";
+    } else if (bmi < 30) {
+      bmiCategory = "Overweight";
+    } else {
+      bmiCategory = "Obese";
+    }
+
+    // Define colors for each BMI category
+    Color color;
+    switch (bmiCategory) {
+      case "Underweight":
+        color = Colors.yellow;
+        break;
+      case "Normal":
+        color = Colors.green;
+        break;
+      case "Overweight":
+        color = Colors.orange;
+        break;
+      case "Obese":
+        color = Colors.red;
+        break;
+      default:
+        color = Colors.grey;
+    }
+
+    return Stack(
+      children: [
+        SizedBox(
+          width: 100,
+          height: 100,
+          child: CircularProgressIndicator(
+            value: 1.0,
+            backgroundColor: Colors.grey[200],
+            valueColor: AlwaysStoppedAnimation<Color>(color),
+            strokeWidth: 6,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 35, 0, 0),
+          child: Text(
+            bmiCategory,
+            style: TextStyle(
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        )
+      ],
     );
   }
 }
