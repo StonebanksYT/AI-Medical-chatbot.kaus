@@ -1,6 +1,9 @@
+import 'dart:ffi';
+import 'package:chat_gpt_02/Controller/usercontroller.dart';
 import 'package:chat_gpt_02/screens/editprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_gpt_02/Model/user.dart';
+import 'package:get/get.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -22,12 +25,12 @@ class ProfilePageState extends State<ProfilePage> {
         Center(
           child: (user.imgurl != null)
               ? CircleAvatar(
-                  radius: 70, backgroundImage: NetworkImage("${user.imgurl}"))
-              : CircleAvatar(radius: 70, child: Icon(Icons.person, size: 70)),
+                  radius: 60, backgroundImage: NetworkImage("${user.imgurl}"))
+              : CircleAvatar(radius: 70, child: Icon(Icons.person, size: 60)),
         ),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.only(top: 35),
+            padding: const EdgeInsets.only(top: 20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,6 +38,8 @@ class ProfilePageState extends State<ProfilePage> {
                   CustomTile(icon: Icons.person_outlined, text: user.name),
                   CustomTile(
                       icon: Icons.email_outlined, text: user.email as String),
+                  CustomTile(
+                      icon: Icons.phone_android_outlined, text: user.phone),
                   CustomTile(icon: Icons.man_4_outlined, text: user.gender),
                   CustomTile(
                       icon: Icons.calendar_month_outlined,
@@ -43,12 +48,13 @@ class ProfilePageState extends State<ProfilePage> {
                   CustomTile(
                       icon: Icons.height_outlined,
                       text: user.height.toString() + " cm"),
+                  CustomTile(
+                      icon: Icons.monitor_weight_outlined,
+                      text: user.weight.toString() + " kg"),
                   user.bloodgrp != null
                       ? CustomTile(
                           icon: Icons.favorite, text: "${user.bloodgrp}")
                       : Container(),
-                  CustomTile(
-                      icon: Icons.phone_android_outlined, text: user.phone),
                   SizedBox(height: 30),
                   Center(
                     child: InkWell(

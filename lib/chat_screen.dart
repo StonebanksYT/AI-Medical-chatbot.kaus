@@ -163,7 +163,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ));
   }
-
   Future<String> translateText(String input) async {
     print("languageController.language.value ${languageController.language.value}");
     Translation translatedText = await translator.translate(input,

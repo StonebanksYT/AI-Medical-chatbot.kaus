@@ -142,7 +142,7 @@ class _SignInPageState extends State<SignInPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Don\'t have an account? ',
                   style: TextStyle(
                     color: Color.fromARGB(255, 112, 102, 134),
@@ -155,7 +155,7 @@ class _SignInPageState extends State<SignInPage> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => SignUpPage()));
                   },
-                  child: Text(
+                  child: const Text(
                     'Create new',
                     style: TextStyle(
                       color: Color.fromARGB(255, 89, 200, 106),

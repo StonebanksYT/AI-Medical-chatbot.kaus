@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:chat_gpt_02/Model/user.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +19,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late int age;
   late String phone;
   late String address;
-  late int height;
+  late int? height;
   late String bloodgrp;
+  late double? weight;
 
   @override
   void initState() {
@@ -31,6 +34,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     address = widget.user.address;
     height = widget.user.height;
     bloodgrp = widget.user.bloodgrp as String;
+    weight = widget.user.weight;
     super.initState();
   }
 
@@ -106,6 +110,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
             onChanged: (value) {
               setState(() {
                 height = int.parse(value);
+              });
+            },
+          ),
+          TextFormField(
+            initialValue: weight.toString(),
+            decoration: InputDecoration(labelText: "Weight (kg)"),
+            keyboardType: TextInputType.number,
+            onChanged: (value) {
+              setState(() {
+                weight = double.parse(value);
               });
             },
           ),
