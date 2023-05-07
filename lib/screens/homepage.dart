@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:chat_gpt_02/Controller/usercontroller.dart';
 import 'package:chat_gpt_02/Model/user.dart';
 import 'package:chat_gpt_02/chat_screen.dart';
 import 'package:chat_gpt_02/screens/editprofile.dart';
@@ -9,16 +7,8 @@ import 'package:chat_gpt_02/screens/settingspage.dart';
 import 'package:chat_gpt_02/screens/signinpage.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-
-
-class HomePage extends StatefulWidget {
+class homePage extends StatefulWidget {
   @override
-
-  State<HomePage> createState() => HomePageState();
-}
-
-class HomePageState extends State<HomePage> {
   State<homePage> createState() => _homePageState();
 }
 
@@ -42,20 +32,22 @@ class _homePageState extends State<homePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
+              leading: Icon(Icons.home),
+              title: Text('Home'),
               onTap: () {
-                MaterialPageRoute(builder: (context) => HomePage());
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
               onTap: () {
                 Navigator.push(
                   context,
@@ -66,11 +58,9 @@ class _homePageState extends State<homePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const SettingsPage()));
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SettingsPage()),
@@ -78,11 +68,9 @@ class _homePageState extends State<homePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
               onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const SignInPage()));
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => SignInPage()),
@@ -95,13 +83,6 @@ class _homePageState extends State<homePage> {
       appBar: AppBar(
         title: const Text('AI Medical Assistant'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const ChatScreen()));
-        },
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.add),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

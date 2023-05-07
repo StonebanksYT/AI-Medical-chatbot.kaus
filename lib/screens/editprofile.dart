@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:chat_gpt_02/Model/user.dart';
 import 'package:flutter/material.dart';
 
