@@ -27,20 +27,20 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(),
-        body: Column(
+      drawer: Drawer(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
+              leading: Icon(Icons.home),
+              title: Text('Home'),
               onTap: () {
                 MaterialPageRoute(builder: (context) => HomePage());
               },
             ),
             ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
               onTap: () {
                 Navigator.push(
                     context,
@@ -51,33 +51,34 @@ class HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const SettingsPage()));
+                    MaterialPageRoute(builder: (context) => SettingsPage()));
               },
             ),
             ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
               onTap: () {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const SignInPage()));
+                    MaterialPageRoute(builder: (context) => SignInPage()));
               },
             ),
           ],
         ),
+      ),
       appBar: AppBar(
         title: const Text('AI Medical Assistant'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const ChatScreen()));
+              context, MaterialPageRoute(builder: (context) => ChatScreen()));
         },
-        backgroundColor: Colors.green,
         child: const Icon(Icons.add),
+        backgroundColor: Colors.green,
       ),
     );
   }
