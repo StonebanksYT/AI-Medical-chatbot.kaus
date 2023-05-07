@@ -35,12 +35,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  
-  flutter_dotenv: ^5.0.2
   flutter_svg: ^2.0.5
   http: ^0.13.6
   velocity_x: ^3.6.0
   image_picker:
+  get: ^4.6.5
+  translator: ^0.1.7
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
