@@ -4,15 +4,13 @@ import 'package:chat_gpt_02/screens/profilepage.dart';
 import 'package:chat_gpt_02/screens/settingspage.dart';
 import 'package:chat_gpt_02/screens/signinpage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-class homePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  State<homePage> createState() => homePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
-class homePageState extends State<homePage> {
+class HomePageState extends State<HomePage> {
   User currentUser = User(
     id: '1',
     imgurl: "https://randomuser.me/api/portraits/men/1.jpg",
@@ -29,23 +27,20 @@ class homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Column(
+      drawer: const Drawer(),
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home'),
+              leading: const Icon(Icons.home),
+              title: const Text('Home'),
               onTap: () {
-                MaterialPageRoute(builder: (context) => homePage());
+                MaterialPageRoute(builder: (context) => HomePage());
               },
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Profile'),
+              leading: const Icon(Icons.person),
+              title: const Text('Profile'),
               onTap: () {
                 Navigator.push(
                     context,
@@ -56,34 +51,33 @@ class homePageState extends State<homePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SettingsPage()));
+                    MaterialPageRoute(builder: (context) => const SettingsPage()));
               },
             ),
             ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
               onTap: () {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => SignInPage()));
+                    MaterialPageRoute(builder: (context) => const SignInPage()));
               },
             ),
           ],
         ),
-      ),
       appBar: AppBar(
         title: const Text('AI Medical Assistant'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ChatScreen()));
+              context, MaterialPageRoute(builder: (context) => const ChatScreen()));
         },
-        child: const Icon(Icons.add),
         backgroundColor: Colors.green,
+        child: const Icon(Icons.add),
       ),
     );
   }
