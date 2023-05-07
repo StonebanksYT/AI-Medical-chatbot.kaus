@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
-
 import 'chatmessage.dart';
+import 'languageControl/languaugeController.dart';
+import 'languageControl/selectLanguage.dart';
 import 'threedots.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:translator/translator.dart';
 
 Future<String> makeRequest(String input) async {
   var apiKey = "448f21b7-5674-475b-a4bf-1f487fc1234d";
@@ -38,6 +41,8 @@ Future<String> makeRequest(String input) async {
   }
 }
 
+GoogleTranslator translator = GoogleTranslator();
+
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
@@ -47,20 +52,32 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
+  LanguageController languageController = Get.put(LanguageController());
+
   final List<ChatMessage> _messages = [];
+  final List<ChatMessage> _uimessages = [];
+
   bool _isTyping = false;
   // Link for api - https://beta.openai.com/account/api-keys
 
   void _sendMessage() async {
     if (_controller.text.isEmpty) return;
+    String translatedText = await translateText(_controller.text);
     ChatMessage message = ChatMessage(
       text: _controller.text,
       sender: "user",
       isImage: false,
     );
-
+    ChatMessage uimessage = ChatMessage(
+      text: translatedText,
+      sender: "user",
+      isImage: false,
+    );
+    print("uimessage.text ${uimessage.text}");
     setState(() {
       _messages.insert(0, message);
+      _uimessages.insert(0, uimessage);
+
       _isTyping = true;
     });
     _controller.clear();
@@ -68,15 +85,17 @@ class _ChatScreenState extends State<ChatScreen> {
     insertNewData(response);
   }
 
-  void insertNewData(String response) {
+  void insertNewData(String response) async {
+    String translatedText = await translateText(response);
     ChatMessage botMessage = ChatMessage(
-      text: response,
+      text: translatedText,
       sender: "bot",
     );
 
     setState(() {
       _isTyping = false;
       _messages.insert(0, botMessage);
+      _uimessages.insert(0, botMessage);
     });
   }
 
@@ -99,6 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 _sendMessage();
               },
             ),
+            LanguageDialogBox()
           ],
         ),
       ],
@@ -111,6 +131,9 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           title: const Text("AI Medical Assistant"),
           centerTitle: true,
+          leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+            Navigator.pop(context);
+          }),
           backgroundColor: Colors.blueAccent,
           elevation: 15,
         ),
@@ -123,7 +146,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 padding: Vx.m8,
                 itemCount: _messages.length,
                 itemBuilder: (context, index) {
-                  return _messages[index];
+                  return _uimessages[index];
                 },
               )),
               if (_isTyping) const ThreeDots(),
@@ -139,5 +162,11 @@ class _ChatScreenState extends State<ChatScreen> {
             ],
           ),
         ));
+  }
+  Future<String> translateText(String input) async {
+    print("languageController.language.value ${languageController.language.value}");
+    Translation translatedText = await translator.translate(input,
+        to: languageController.language.value);
+    return translatedText.text;
   }
 }

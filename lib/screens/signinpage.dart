@@ -80,7 +80,7 @@ class _SignInPageState extends State<SignInPage> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => homePage()));
+                      MaterialPageRoute(builder: (context) => HomePage()));
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

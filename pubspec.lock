@@ -119,14 +119,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_dotenv:
-    dependency: "direct main"
-    description:
-      name: flutter_dotenv
-      sha256: d9283d92059a22e9834bc0a31336658ffba77089fb6f3cc36751f1fc7c6661a3
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -454,6 +446,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.16"
+  translator:
+    dependency: "direct main"
+    description:
+      name: translator
+      sha256: "225ee22fc482736c593be5c232c0c5884b16d7cc42945c51ac73d9a0441dddcc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.7"
   typed_data:
     dependency: transitive
     description:
