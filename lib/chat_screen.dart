@@ -131,7 +131,9 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           title: const Text("AI Medical Assistant"),
           centerTitle: true,
-          leading: const Icon(Icons.chat_bubble_outline_outlined),
+          leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+            Navigator.pop(context);
+          }),
           backgroundColor: Colors.blueAccent,
           elevation: 15,
         ),
