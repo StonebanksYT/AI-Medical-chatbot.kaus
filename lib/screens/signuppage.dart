@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chat_gpt_02/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -16,6 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
   late String phone;
   late String address;
   late int height;
+  late double weight;
   late String bloodgrp;
   late File _image;
 
@@ -132,6 +134,15 @@ class _SignUpPageState extends State<SignUpPage> {
             },
           ),
           TextFormField(
+            decoration: InputDecoration(labelText: "Weight (kg)"),
+            keyboardType: TextInputType.number,
+            onChanged: (value) {
+              setState(() {
+                weight = double.parse(value);
+              });
+            },
+          ),
+          TextFormField(
             decoration: InputDecoration(labelText: "Blood Group"),
             onChanged: (value) {
               setState(() {
@@ -144,6 +155,8 @@ class _SignUpPageState extends State<SignUpPage> {
             onPressed: () {
               // save the user data and navigate to the home page
               // you can implement this part according to your app's logic
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => homePage()));
             },
             child: Text("Sign Up"),
           ),

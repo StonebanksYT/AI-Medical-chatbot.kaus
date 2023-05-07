@@ -10,17 +10,16 @@ Future<String> makeRequest(String input) async {
   var apiKey = "448f21b7-5674-475b-a4bf-1f487fc1234d";
   var url = "https://api.oneai.com/api/v0/pipeline";
 
-  var headers = {
-    "api-key": apiKey,
-    "content-type": "application/json"
-  };
+  var headers = {"api-key": apiKey, "content-type": "application/json"};
 
   var payload = {
     "input": input,
     "input_type": "article",
     "output_type": "json",
     "multilingual": {"enabled": true},
-    "steps": [{"skill": "gpt"}]
+    "steps": [
+      {"skill": "gpt"}
+    ]
   };
 
   final response = await http.post(Uri.parse(url),
@@ -30,11 +29,11 @@ Future<String> makeRequest(String input) async {
     var data = json.decode(response.body);
     print(data);
     print(data['output'][0]['contents'][0]['utterance']);
-    String output=data['output'][0]['contents'][0]['utterance'];
+    String output = data['output'][0]['contents'][0]['utterance'];
     return output;
   } else {
     print('Request failed with status: ${response.statusCode}.');
-    String errorCode='Request failed with status: ${response.statusCode}.';
+    String errorCode = 'Request failed with status: ${response.statusCode}.';
     return errorCode;
   }
 }
@@ -65,8 +64,8 @@ class _ChatScreenState extends State<ChatScreen> {
       _isTyping = true;
     });
     _controller.clear();
-      String response = await makeRequest(message.text);
-      insertNewData(response);
+    String response = await makeRequest(message.text);
+    insertNewData(response);
   }
 
   void insertNewData(String response) {
@@ -112,7 +111,6 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           title: const Text("AI Medical Assistant"),
           centerTitle: true,
-          leading: const Icon(Icons.chat_bubble_outline_outlined),
           backgroundColor: Colors.blueAccent,
           elevation: 15,
         ),
