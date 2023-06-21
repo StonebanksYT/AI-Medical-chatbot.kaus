@@ -14,9 +14,9 @@ Future<String> makeRequest(String input) async {
   var url = "https://api.oneai.com/api/v0/pipeline";
 
   var headers = {"api-key": apiKey, "content-type": "application/json"};
-
+  var prompt = "Medical question: " + input;
   var payload = {
-    "input": input,
+    "input": prompt,
     "input_type": "article",
     "output_type": "json",
     "multilingual": {"enabled": true},
@@ -131,9 +131,11 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           title: const Text("AI Medical Assistant"),
           centerTitle: true,
-          leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-            Navigator.pop(context);
-          }),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
           backgroundColor: Colors.blueAccent,
           elevation: 15,
         ),
@@ -163,8 +165,10 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ));
   }
+
   Future<String> translateText(String input) async {
-    print("languageController.language.value ${languageController.language.value}");
+    print(
+        "languageController.language.value ${languageController.language.value}");
     Translation translatedText = await translator.translate(input,
         to: languageController.language.value);
     return translatedText.text;
